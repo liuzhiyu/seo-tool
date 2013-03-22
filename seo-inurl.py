@@ -11,18 +11,11 @@ def get_baidu_records_count(inurl):
 		sitetip = soup.find('span',{'class':'nums'})
 		if sitetip.is_empty_element == False:
 			text = sitetip.string
-			comma = re.compile(r',')
-			c = comma.search(text)
-			if c == None:
-				numPattern = re.compile(r'\d+')
-				m = numPattern.search(text)
-				strCn = m.group(0)
-				return int(strCn)
-			else:
-				numPattern = re.compile(r'\d+,\d+')
-				m = numPattern.search(text)
-				strCn = m.group(0)
-				return int(strCn.replace(',',''))			
+			text = text.replace(',','')
+			numPattern = re.compile(r'\d+')
+			m = numPattern.search(text)
+			strCn = m.group(0)
+			return int(strCn)			
 		else:
 			return 0
 	except:
@@ -39,5 +32,3 @@ for inurl in open("inurl.txt"):
 	inurl =  inurl.rstrip()
 	count = get_baidu_records_count(inurl)
 	writer.writerow([inurl, count])
-
-	
