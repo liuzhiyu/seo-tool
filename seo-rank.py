@@ -1,11 +1,11 @@
 #-*- coding: UTF-8 -*-  
-# 还差两个问题，第一如何解决csv输入中文的问题，第二如何解决翻页查询的问题  
+
 from bs4 import BeautifulSoup
 import urllib2, re, csv, time, sys
 reload(sys) 
 sys.setdefaultencoding( "utf-8" ) 
 
-
+# 读取百度搜索结果页面，查询符合域名的span
 def get_links(host, keyword, pn):
 	url = 'http://www.baidu.com/s?wd=' + keyword + '&pn=' + str(pn)
 	try:
@@ -17,6 +17,7 @@ def get_links(host, keyword, pn):
 	except:
 		print "connection error"
 
+# 根据查询到的span，查询所属的table，并将关键词、排名和收录域名储存到列表中
 def get_linkrank(links, keyword, pn):
 	linklist = []
 	for link in links:
@@ -31,6 +32,7 @@ def get_linkrank(links, keyword, pn):
 			pass	
 	return linklist
 
+# 查询十页，将翻页检索到的内容存储到列表中
 def get_linklist(host, keyword):
 	list = []
 	pn = 0
@@ -41,7 +43,7 @@ def get_linklist(host, keyword):
 		pn += 10
 	return list
 
-# read website from a txt file and save them as a list
+# 主程序，写到csv中的keyword是乱码，怎么解决？
 
 filename1 = time.strftime('%Y-%m-%d', time.localtime(time.time()))
 filename2 = str(filename1) + '-rank.csv'
