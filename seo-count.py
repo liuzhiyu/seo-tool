@@ -22,7 +22,7 @@ def get_baidu_records_count(host):
 		return 'error'
 
 
-# read website from a txt file and save them as a list
+# read website from a txt file and save them to a csv file.
 
 filename1 = time.strftime('%Y-%m-%d', time.localtime(time.time()))
 filename2 = str(filename1) + '.csv'
@@ -32,5 +32,6 @@ for site in open("site.txt"):
 	site =  site.rstrip()
 	count = get_baidu_records_count(site)
 	writer.writerow([site, count])
-
+	print site + ' Done!'
+print 'Finished!'
 	
